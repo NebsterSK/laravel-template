@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ Vite::asset('resources/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    @vite(['resources/sass/app.scss'])
+    <title>@yield('title') | {{ config('app.name') }}</title>
+    @vite(['resources/sass/app.scss', 'resources/sass/xs.sass', 'resources/sass/sm.sass', 'resources/sass/md.sass', 'resources/sass/lg.sass', 'resources/sass/xl.sass', 'resources/sass/xxl.sass'])
 </head>
 <body>
     <div id="app">
@@ -26,7 +26,6 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">

@@ -7,6 +7,12 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
+                'resources/sass/xs.sass',
+                'resources/sass/sm.sass',
+                'resources/sass/md.sass',
+                'resources/sass/lg.sass',
+                'resources/sass/xl.sass',
+                'resources/sass/xxl.sass',
                 'resources/js/images.js',
                 'resources/js/app.js',
             ],
