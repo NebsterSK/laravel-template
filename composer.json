@@ -11,9 +11,10 @@
     "require": {
         "php": "^8.5",
         "ext-pdo": "*",
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/fortify": "^1.36",
         "laravel/framework": "^13.0",
-        "laravel/tinker": "^3.0",
-        "laravel/ui": "^4.6"
+        "laravel/wayfinder": "^0.1.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.0",
@@ -21,8 +22,8 @@
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "*",
         "laravel/boost": "^2.0",
-        "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.25",
+        "laravel/tinker": "^3.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.1",
@@ -54,8 +55,27 @@
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
         ],
+        "dev:ssr": [
+            "npm run build:ssr",
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=server,queue,logs,ssr --kill-others"
+        ],
+        "lint": [
+            "pint --parallel"
+        ],
+        "lint:check": [
+            "pint --parallel --test"
+        ],
+        "ci:check": [
+            "Composer\\Config::disableProcessTimeout",
+            "npm run lint:check",
+            "npm run format:check",
+            "npm run types:check",
+            "@test"
+        ],
         "test": [
             "@php artisan config:clear --ansi",
+            "@lint:check",
             "@php artisan test"
         ],
         "post-autoload-dump": [
@@ -67,7 +87,7 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta",
             "@php artisan ide-helper:models -WR",
-            "@php artisan boost:update"
+            "@php artisan boost:update --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -79,9 +99,6 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ],
-        "models": [
-            "@php artisan ide-helper:models -WR"
         ],
         "larastan": [
             "vendor/bin/phpstan analyse"

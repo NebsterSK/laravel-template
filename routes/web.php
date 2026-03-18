@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
 
-Route::view('/', 'index')->name('index');
+Route::inertia('/', 'Welcome', [
+    'canRegister' => Features::enabled(Features::registration()),
+])->name('home');
 
-Auth::routes();
-
-Route::middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 });
+
+require __DIR__.'/settings.php';

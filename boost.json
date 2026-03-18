@@ -1,10 +1,16 @@
 {
     "agents": [
-        "copilot"
+        "claude_code"
     ],
-    "editors": [
-        "phpstorm"
-    ],
-    "guidelines": [],
-    "herd_mcp": true
+    "guidelines": true,
+    "herd_mcp": true,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "sail": false,
+    "skills": [
+        "wayfinder-development",
+        "pest-testing",
+        "inertia-vue-development",
+        "tailwindcss-development"
+    ]
 }
