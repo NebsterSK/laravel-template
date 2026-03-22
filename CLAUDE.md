@@ -235,26 +235,8 @@ Wayfinder generates TypeScript functions for Laravel routes. Import from `@/acti
 
 # Laravel Pint Code Formatter
 
-- If you have modified any PHP files, you must run `vendor/bin/pint --format agent` before finalizing changes to ensure your code matches the project's expected style.
+- If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
 - Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
-
-=== larastan/core rules ===
-
-# Larastan Static Analysis
-
-- If you have modified any PHP files, you must run `vendor/bin/phpstan analyse --no-interaction` before finalizing changes to ensure the code passes static analysis.
-
-=== eslint/core rules ===
-
-# ESLint Code Quality
-
-- If you have modified any Vue, TypeScript, or JavaScript files, you must run `npx eslint --fix` before finalizing changes to ensure the code passes linting.
-
-=== prettier/core rules ===
-
-# Prettier Code Formatter
-
-- If you have modified any Vue, TypeScript, or JavaScript files, you must run `npx prettier --write resources/js/` before finalizing changes to ensure the code is properly formatted.
 
 === pest/core rules ===
 
