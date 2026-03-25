@@ -1,4 +1,8 @@
-# TODO
+# Laravel template
+
+## Structure
+
+- This project is located in E:\webs\template
 
 ===
 
