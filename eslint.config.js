@@ -39,6 +39,10 @@ export default defineConfigWithVueTs(
         },
         rules: {
             'vue/multi-word-component-names': 'off',
+            'vue/padding-line-between-tags': [
+                'error',
+                [{ blankLine: 'always', prev: '*', next: '*' }],
+            ],
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/consistent-type-imports': [
                 'error',
