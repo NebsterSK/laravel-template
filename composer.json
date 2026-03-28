@@ -68,6 +68,9 @@
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
+        "models": [
+            "@php artisan ide-helper:models -WR"
+        ],
         "larastan": [
             "vendor/bin/phpstan analyse"
         ],
