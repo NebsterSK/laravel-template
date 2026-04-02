@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import TextLink from '@/components/TextLink.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import { index } from '@/routes';
 import { update } from '@/routes/password';
 
 const props = defineProps<{
@@ -90,5 +92,9 @@ const inputEmail = ref(props.email);
                 </Button>
             </div>
         </Form>
+
+        <div class="text-center text-sm text-muted-foreground">
+            <TextLink :href="index()">Back to home</TextLink>
+        </div>
     </AuthLayout>
 </template>

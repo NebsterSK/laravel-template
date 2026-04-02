@@ -13,6 +13,10 @@
 - Use Laravel 13 syntax, models have their fillable properties set by PHP Attribute
 - Always use FormRequest for validation.
 
+## Front-End
+
+- Publish new ShadCN Vue components with `npx shadcn-vue@latest add <component>`.
+
 ===
 
 <laravel-boost-guidelines>

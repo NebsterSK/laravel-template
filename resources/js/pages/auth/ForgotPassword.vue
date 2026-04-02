@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
-import { login } from '@/routes';
+import { index, login } from '@/routes';
 import { email } from '@/routes/password';
 
 defineProps<{
@@ -62,6 +62,8 @@ defineProps<{
                 <span>Or, return to</span>
 
                 <TextLink :href="login()">log in</TextLink>
+                <span>or</span>
+                <TextLink :href="index()">back to home</TextLink>
             </div>
         </div>
     </AuthLayout>
