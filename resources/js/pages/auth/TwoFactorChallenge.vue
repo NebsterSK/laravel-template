@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import {
     InputOTP,
     InputOTPGroup,
@@ -58,6 +59,7 @@ const code = ref<string>('');
                     @error="code = ''"
                     #default="{ errors, processing, clearErrors }"
                 >
+                    <fieldset :disabled="processing">
                     <input type="hidden" name="code" :value="code" />
 
                     <div
@@ -68,7 +70,6 @@ const code = ref<string>('');
                                 id="otp"
                                 v-model="code"
                                 :maxlength="6"
-                                :disabled="processing"
                                 autofocus
                             >
                                 <InputOTPGroup>
@@ -84,9 +85,11 @@ const code = ref<string>('');
                         <InputError :message="errors.code" />
                     </div>
 
-                    <Button type="submit" class="w-full" :disabled="processing"
-                        >Continue</Button
-                    >
+                    <Button type="submit" class="mt-4 w-full">
+                        <Spinner v-if="processing" />
+                        Continue
+                    </Button>
+                    </fieldset>
 
                     <div class="text-center text-sm text-muted-foreground">
                         <span>or you can </span>
@@ -109,6 +112,7 @@ const code = ref<string>('');
                     reset-on-error
                     #default="{ errors, processing, clearErrors }"
                 >
+                    <fieldset :disabled="processing">
                     <Input
                         name="recovery_code"
                         type="text"
@@ -119,9 +123,11 @@ const code = ref<string>('');
 
                     <InputError :message="errors.recovery_code" />
 
-                    <Button type="submit" class="w-full" :disabled="processing"
-                        >Continue</Button
-                    >
+                    <Button type="submit" class="mt-4 w-full">
+                        <Spinner v-if="processing" />
+                        Continue
+                    </Button>
+                    </fieldset>
 
                     <div class="text-center text-sm text-muted-foreground">
                         <span>or you can </span>

@@ -6,6 +6,7 @@ import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import {
     Dialog,
     DialogClose,
@@ -73,6 +74,7 @@ const passwordInput = useTemplateRef('passwordInput');
                             </DialogDescription>
                         </DialogHeader>
 
+                        <fieldset :disabled="processing">
                         <div class="grid gap-2">
                             <Label for="password" class="sr-only"
                                 >Password</Label
@@ -88,7 +90,7 @@ const passwordInput = useTemplateRef('passwordInput');
                             <InputError :message="errors.password" />
                         </div>
 
-                        <DialogFooter class="gap-2">
+                        <DialogFooter class="mt-6 gap-2">
                             <DialogClose as-child>
                                 <Button
                                     variant="secondary"
@@ -106,12 +108,13 @@ const passwordInput = useTemplateRef('passwordInput');
                             <Button
                                 type="submit"
                                 variant="destructive"
-                                :disabled="processing"
                                 data-test="confirm-delete-user-button"
                             >
+                                <Spinner v-if="processing" />
                                 Delete account
                             </Button>
                         </DialogFooter>
+                        </fieldset>
                     </Form>
                 </DialogContent>
             </Dialog>

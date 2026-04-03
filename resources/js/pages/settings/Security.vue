@@ -10,6 +10,7 @@ import TwoFactorRecoveryCodes from '@/components/TwoFactorRecoveryCodes.vue';
 import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
@@ -70,6 +71,7 @@ onUnmounted(() => clearTwoFactorAuthData());
                     class="space-y-6"
                     v-slot="{ errors, processing, recentlySuccessful }"
                 >
+                    <fieldset :disabled="processing" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="current_password">Current password</Label>
 
@@ -116,9 +118,9 @@ onUnmounted(() => clearTwoFactorAuthData());
 
                     <div class="flex items-center gap-4">
                         <Button
-                            :disabled="processing"
                             data-test="update-password-button"
                         >
+                            <Spinner v-if="processing" />
                             Save password
                         </Button>
 
@@ -136,6 +138,7 @@ onUnmounted(() => clearTwoFactorAuthData());
                             </p>
                         </Transition>
                     </div>
+                    </fieldset>
                 </Form>
             </div>
 
@@ -172,6 +175,7 @@ onUnmounted(() => clearTwoFactorAuthData());
                             #default="{ processing }"
                         >
                             <Button type="submit" :disabled="processing">
+                                <Spinner v-if="processing" />
                                 Enable 2FA
                             </Button>
                         </Form>
@@ -195,6 +199,7 @@ onUnmounted(() => clearTwoFactorAuthData());
                                 type="submit"
                                 :disabled="processing"
                             >
+                                <Spinner v-if="processing" />
                                 Disable 2FA
                             </Button>
                         </Form>

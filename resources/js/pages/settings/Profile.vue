@@ -8,6 +8,7 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { edit } from '@/routes/profile';
@@ -51,6 +52,7 @@ const user = computed(() => page.props.auth.user);
                     class="space-y-6"
                     v-slot="{ errors, processing, recentlySuccessful }"
                 >
+                    <fieldset :disabled="processing" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="name">Name</Label>
 
@@ -107,10 +109,11 @@ const user = computed(() => page.props.auth.user);
 
                     <div class="flex items-center gap-4">
                         <Button
-                            :disabled="processing"
                             data-test="update-profile-button"
-                            >Save</Button
                         >
+                            <Spinner v-if="processing" />
+                            Save
+                        </Button>
 
                         <Transition
                             enter-active-class="transition ease-in-out"
@@ -126,6 +129,7 @@ const user = computed(() => page.props.auth.user);
                             </p>
                         </Transition>
                     </div>
+                    </fieldset>
                 </Form>
             </div>
 

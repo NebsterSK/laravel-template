@@ -31,7 +31,7 @@ defineProps<{
 
         <div class="space-y-6">
             <Form v-bind="email.form()" v-slot="{ errors, processing }">
-                <div class="grid gap-2">
+                <fieldset :disabled="processing" class="grid gap-2">
                     <Label for="email">Email address</Label>
 
                     <Input
@@ -44,7 +44,6 @@ defineProps<{
                     />
 
                     <InputError :message="errors.email" />
-                </div>
 
                 <div class="my-6 flex items-center justify-start">
                     <Button
@@ -56,6 +55,7 @@ defineProps<{
                         Email password reset link
                     </Button>
                 </div>
+                </fieldset>
             </Form>
 
             <div class="space-x-1 text-center text-sm text-muted-foreground">

@@ -40,7 +40,7 @@ defineProps<{
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
-            <div class="grid gap-6">
+            <fieldset :disabled="processing" class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
 
@@ -102,7 +102,7 @@ defineProps<{
                     <Spinner v-if="processing" />
                     Log in
                 </Button>
-            </div>
+            </fieldset>
 
             <div
                 class="text-center text-sm text-muted-foreground"

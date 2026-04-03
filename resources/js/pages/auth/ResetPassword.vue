@@ -33,7 +33,7 @@ const inputEmail = ref(props.email);
             :reset-on-success="['password', 'password_confirmation']"
             v-slot="{ errors, processing }"
         >
-            <div class="grid gap-6">
+            <fieldset :disabled="processing" class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
 
@@ -90,7 +90,7 @@ const inputEmail = ref(props.email);
                     <Spinner v-if="processing" />
                     Reset password
                 </Button>
-            </div>
+            </fieldset>
         </Form>
 
         <div class="text-center text-sm text-muted-foreground">

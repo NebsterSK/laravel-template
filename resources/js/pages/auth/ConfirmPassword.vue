@@ -21,7 +21,7 @@ import { store } from '@/routes/password/confirm';
             reset-on-success
             v-slot="{ errors, processing }"
         >
-            <div class="space-y-6">
+            <fieldset :disabled="processing" class="space-y-6">
                 <div class="grid gap-2">
                     <Label htmlFor="password">Password</Label>
 
@@ -40,14 +40,13 @@ import { store } from '@/routes/password/confirm';
                 <div class="flex items-center">
                     <Button
                         class="w-full"
-                        :disabled="processing"
                         data-test="confirm-password-button"
                     >
                         <Spinner v-if="processing" />
                         Confirm password
                     </Button>
                 </div>
-            </div>
+            </fieldset>
         </Form>
     </AuthLayout>
 </template>

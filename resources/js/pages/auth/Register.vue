@@ -25,7 +25,7 @@ import { store } from '@/routes/register';
             v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
-            <div class="grid gap-6">
+            <fieldset :disabled="processing" class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="name">Name</Label>
 
@@ -99,7 +99,7 @@ import { store } from '@/routes/register';
                     <Spinner v-if="processing" />
                     Create account
                 </Button>
-            </div>
+            </fieldset>
 
             <div class="text-center text-sm text-muted-foreground">
                 Already have an account?
