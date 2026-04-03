@@ -6,7 +6,6 @@ import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
 import {
     Dialog,
     DialogClose,
@@ -18,6 +17,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 
 const passwordInput = useTemplateRef('passwordInput');
 </script>
@@ -75,45 +75,45 @@ const passwordInput = useTemplateRef('passwordInput');
                         </DialogHeader>
 
                         <fieldset :disabled="processing">
-                        <div class="grid gap-2">
-                            <Label for="password" class="sr-only"
-                                >Password</Label
-                            >
-
-                            <PasswordInput
-                                id="password"
-                                name="password"
-                                ref="passwordInput"
-                                placeholder="Password"
-                            />
-
-                            <InputError :message="errors.password" />
-                        </div>
-
-                        <DialogFooter class="mt-6 gap-2">
-                            <DialogClose as-child>
-                                <Button
-                                    variant="secondary"
-                                    @click="
-                                        () => {
-                                            clearErrors();
-                                            reset();
-                                        }
-                                    "
+                            <div class="grid gap-2">
+                                <Label for="password" class="sr-only"
+                                    >Password</Label
                                 >
-                                    Cancel
-                                </Button>
-                            </DialogClose>
 
-                            <Button
-                                type="submit"
-                                variant="destructive"
-                                data-test="confirm-delete-user-button"
-                            >
-                                <Spinner v-if="processing" />
-                                Delete account
-                            </Button>
-                        </DialogFooter>
+                                <PasswordInput
+                                    id="password"
+                                    name="password"
+                                    ref="passwordInput"
+                                    placeholder="Password"
+                                />
+
+                                <InputError :message="errors.password" />
+                            </div>
+
+                            <DialogFooter class="mt-6 gap-2">
+                                <DialogClose as-child>
+                                    <Button
+                                        variant="secondary"
+                                        @click="
+                                            () => {
+                                                clearErrors();
+                                                reset();
+                                            }
+                                        "
+                                    >
+                                        Cancel
+                                    </Button>
+                                </DialogClose>
+
+                                <Button
+                                    type="submit"
+                                    variant="destructive"
+                                    data-test="confirm-delete-user-button"
+                                >
+                                    <Spinner v-if="processing" />
+                                    Delete account
+                                </Button>
+                            </DialogFooter>
                         </fieldset>
                     </Form>
                 </DialogContent>

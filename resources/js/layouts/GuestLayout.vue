@@ -26,28 +26,47 @@ const canRegister = usePage().props.canRegister as boolean;
                 </Link>
 
                 <div class="ml-auto hidden items-center space-x-2 lg:flex">
-                    <Link :href="login()" :class="buttonVariants({ variant: 'ghost' })">Log in</Link>
+                    <Link
+                        :href="login()"
+                        :class="buttonVariants({ variant: 'ghost' })"
+                        >Log in</Link
+                    >
 
-                    <Link v-if="canRegister" :href="register()" :class="buttonVariants()">Register</Link>
+                    <Link
+                        v-if="canRegister"
+                        :href="register()"
+                        :class="buttonVariants()"
+                        >Register</Link
+                    >
                 </div>
 
                 <!-- Mobile Menu -->
                 <div class="ml-auto lg:hidden">
                     <Sheet>
                         <SheetTrigger :as-child="true">
-                            <Button variant="ghost" size="icon" class="h-10 w-10">
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                class="h-10 w-10"
+                            >
                                 <Menu class="h-6 w-6" />
                             </Button>
                         </SheetTrigger>
 
                         <SheetContent side="right" class="w-75 p-6">
-                            <SheetTitle class="sr-only">Navigation menu</SheetTitle>
+                            <SheetTitle class="sr-only"
+                                >Navigation menu</SheetTitle
+                            >
 
                             <SheetHeader class="flex justify-start text-left">
-                                <AppLogoIcon class="size-6 fill-current text-black dark:text-white" />
+                                <AppLogoIcon
+                                    class="size-6 fill-current text-black dark:text-white"
+                                />
                             </SheetHeader>
 
-                            <div class="flex h-full flex-1 flex-col justify-between space-y-4 py-6">
+                            <div
+                                class="flex h-full flex-1 flex-col justify-between space-y-4 py-6"
+                            >
                                 <nav class="-mx-3 space-y-1">
                                     <Link
                                         :href="login()"
@@ -71,7 +90,9 @@ const canRegister = usePage().props.canRegister as boolean;
             </div>
         </div>
 
-        <main class="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl">
+        <main
+            class="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl"
+        >
             <slot />
         </main>
     </div>

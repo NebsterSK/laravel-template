@@ -33,11 +33,10 @@ defineProps<{
             v-slot="{ processing }"
         >
             <fieldset :disabled="processing">
-            <Button variant="secondary">
-                <Spinner v-if="processing" />
-                Resend verification email
-            </Button>
-
+                <Button variant="secondary">
+                    <Spinner v-if="processing" />
+                    Resend verification email
+                </Button>
             </fieldset>
 
             <TextLink

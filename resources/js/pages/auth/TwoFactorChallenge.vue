@@ -4,12 +4,12 @@ import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
 import {
     InputOTP,
     InputOTPGroup,
     InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { store } from '@/routes/two-factor/login';
 import type { TwoFactorConfigContent } from '@/types';
@@ -60,35 +60,37 @@ const code = ref<string>('');
                     #default="{ errors, processing, clearErrors }"
                 >
                     <fieldset :disabled="processing">
-                    <input type="hidden" name="code" :value="code" />
+                        <input type="hidden" name="code" :value="code" />
 
-                    <div
-                        class="flex flex-col items-center justify-center space-y-3 text-center"
-                    >
-                        <div class="flex w-full items-center justify-center">
-                            <InputOTP
-                                id="otp"
-                                v-model="code"
-                                :maxlength="6"
-                                autofocus
+                        <div
+                            class="flex flex-col items-center justify-center space-y-3 text-center"
+                        >
+                            <div
+                                class="flex w-full items-center justify-center"
                             >
-                                <InputOTPGroup>
-                                    <InputOTPSlot
-                                        v-for="index in 6"
-                                        :key="index"
-                                        :index="index - 1"
-                                    />
-                                </InputOTPGroup>
-                            </InputOTP>
+                                <InputOTP
+                                    id="otp"
+                                    v-model="code"
+                                    :maxlength="6"
+                                    autofocus
+                                >
+                                    <InputOTPGroup>
+                                        <InputOTPSlot
+                                            v-for="index in 6"
+                                            :key="index"
+                                            :index="index - 1"
+                                        />
+                                    </InputOTPGroup>
+                                </InputOTP>
+                            </div>
+
+                            <InputError :message="errors.code" />
                         </div>
 
-                        <InputError :message="errors.code" />
-                    </div>
-
-                    <Button type="submit" class="mt-4 w-full">
-                        <Spinner v-if="processing" />
-                        Continue
-                    </Button>
+                        <Button type="submit" class="mt-4 w-full">
+                            <Spinner v-if="processing" />
+                            Continue
+                        </Button>
                     </fieldset>
 
                     <div class="text-center text-sm text-muted-foreground">
@@ -113,20 +115,20 @@ const code = ref<string>('');
                     #default="{ errors, processing, clearErrors }"
                 >
                     <fieldset :disabled="processing">
-                    <Input
-                        name="recovery_code"
-                        type="text"
-                        placeholder="Enter recovery code"
-                        :autofocus="showRecoveryInput"
-                        required
-                    />
+                        <Input
+                            name="recovery_code"
+                            type="text"
+                            placeholder="Enter recovery code"
+                            :autofocus="showRecoveryInput"
+                            required
+                        />
 
-                    <InputError :message="errors.recovery_code" />
+                        <InputError :message="errors.recovery_code" />
 
-                    <Button type="submit" class="mt-4 w-full">
-                        <Spinner v-if="processing" />
-                        Continue
-                    </Button>
+                        <Button type="submit" class="mt-4 w-full">
+                            <Spinner v-if="processing" />
+                            Continue
+                        </Button>
                     </fieldset>
 
                     <div class="text-center text-sm text-muted-foreground">
