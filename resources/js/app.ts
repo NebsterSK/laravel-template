@@ -25,14 +25,16 @@ createInertiaApp({
             render() {
                 return [
                     h(App, props),
-                    h(Teleport, { to: 'body' }, h(Sonner, { position: 'top-right', richColors: true })),
+                    h(
+                        Teleport,
+                        { to: 'body' },
+                        h(Sonner, { position: 'top-right', richColors: true }),
+                    ),
                 ];
             },
         });
 
-        createApp(RootComponent)
-            .use(plugin)
-            .mount(el);
+        createApp(RootComponent).use(plugin).mount(el);
     },
     progress: {
         color: '#4B5563',
