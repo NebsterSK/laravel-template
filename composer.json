@@ -20,6 +20,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.0",
         "barryvdh/laravel-ide-helper": "^3.6",
+        "ekino/phpstan-banned-code": "^3.2",
         "fakerphp/faker": "^1.23",
         "joshcirre/instruckt-laravel": "*",
         "larastan/larastan": "*",
