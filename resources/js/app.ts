@@ -6,7 +6,6 @@ import '../css/app.css';
 import Sonner from '@/components/ui/sonner/Sonner.vue';
 import { initializeTheme } from '@/composables/useAppearance';
 import { useFlashToast } from '@/composables/useFlashToast';
-import 'virtual:instruckt';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
