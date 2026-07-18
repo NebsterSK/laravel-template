@@ -12,14 +12,18 @@ See `README.md` for project overview, stack, setup, and architecture.
 ## Back-end
 
 - Use the newest Laravel syntax valid for this project's version.
-- Validate every request with a FormRequest, including `index()` query params.
+- Validate every incoming request with a `spatie/laravel-data` Data object, including `index()` query params. Don't create FormRequests.
 
-### DTOs
+### DTOs (spatie/laravel-data)
 
-- Return `spatie/laravel-data` DTOs from `Inertia::render`, not hand-mapped arrays.
-- Put DTOs in `app/Data/{Module}`; annotate with `#[TypeScript]`.
-- Build write payloads with `SomeData::from($request->validated())`. Never validate inside a DTO.
-- Run `php artisan typescript:transform` after adding or changing a DTO.
+- One `Data` object per payload, in `app/Data/{Module}`; annotate with `#[TypeScript]`.
+- Use Data objects for **both** validating incoming requests and typing output to the frontend — not FormRequests, not hand-mapped arrays.
+- **Input / validation**: type-hint the Data object in the controller action (e.g. `store(PostData $data)`). laravel-data resolves it from the request and validates before the method body runs; a failed validation redirects back with errors automatically (Inertia picks them up).
+- Define rules in a static `rules(ValidationContext $context): array` method using Laravel's array syntax (mirrors a FormRequest's `rules()`). Use validation attributes (`#[Required]`, `#[Max(255)]`, …) only for trivial single-rule fields.
+- Authorize in a static `authorize(): bool` on the Data object; put custom messages / attribute names in static `messages()` / `attributes()`.
+- Never call `SomeData::from($request)` for a write payload — that skips validation. Type-hint the object (auto-validates) or use `SomeData::validateAndCreate($request)`.
+- **Output**: return Data objects from `Inertia::render`; build them from models with `SomeData::from($model)` / `SomeData::collect(...)`.
+- Run `php artisan typescript:transform` after adding or changing a Data object.
 - Use `AttributedClassTransformer` + `->replaceType(\Illuminate\Support\Carbon::class, 'string')`. Don't use laravel-data's `DataTypeScriptTransformer`.
 
 ### Migrations
@@ -33,7 +37,7 @@ See `README.md` for project overview, stack, setup, and architecture.
 - Pass spread arguments to `allowedFilters()` / `allowedSorts()`, never an array.
 - Search → `AllowedFilter::partial`. Filters → `AllowedFilter::exact` (comma-separated input = `whereIn`).
 - Sort a related column with `AllowedSort::callback()` + a correlated subquery, not a join.
-- Validate query params with a FormRequest on `index()`: `filter.*`, `sort` via `Rule::in([...])`, `page` as `integer|min:1`.
+- Validate query params with a Data object type-hinted on `index()`: `filter.*`, `sort` via `Rule::in([...])`, `page` as `integer|min:1`. Model nested `filter` as a nested Data object.
 - Return `SomeData::collect($paginator->getCollection())` + a `meta` array + filter options + current `filters`/`sort`.
 - store/update/destroy `return back()`.
 

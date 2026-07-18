@@ -20,6 +20,7 @@
         "spatie/laravel-typescript-transformer": "^3.2"
     },
     "require-dev": {
+        "andreapollastri/checkpoint": "^1.1",
         "barryvdh/laravel-debugbar": "^4.0",
         "barryvdh/laravel-ide-helper": "^3.6",
         "ekino/phpstan-banned-code": "^3.2",
