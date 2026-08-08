@@ -14,66 +14,14 @@ See `README.md` for project overview, stack, setup, and architecture.
 - Use the newest Laravel syntax valid for this project's version.
 - Validate every incoming request with a `spatie/laravel-data` Data object, including `index()` query params. Don't create FormRequests.
 
-### DTOs (spatie/laravel-data)
-
-- One `Data` object per payload, in `app/Data/{Module}`; annotate with `#[TypeScript]`.
-- Use Data objects for **both** validating incoming requests and typing output to the frontend — not FormRequests, not hand-mapped arrays.
-- **Input / validation**: type-hint the Data object in the controller action (e.g. `store(PostData $data)`). laravel-data resolves it from the request and validates before the method body runs; a failed validation redirects back with errors automatically (Inertia picks them up).
-- Define rules in a static `rules(ValidationContext $context): array` method using Laravel's array syntax (mirrors a FormRequest's `rules()`). Use validation attributes (`#[Required]`, `#[Max(255)]`, …) only for trivial single-rule fields.
-- Authorize in a static `authorize(): bool` on the Data object; put custom messages / attribute names in static `messages()` / `attributes()`.
-- Never call `SomeData::from($request)` for a write payload — that skips validation. Type-hint the object (auto-validates) or use `SomeData::validateAndCreate($request)`.
-- **Output**: return Data objects from `Inertia::render`; build them from models with `SomeData::from($model)` / `SomeData::collect(...)`.
-- Run `php artisan typescript:transform` after adding or changing a Data object.
-- Use `AttributedClassTransformer` + `->replaceType(\Illuminate\Support\Carbon::class, 'string')`. Don't use laravel-data's `DataTypeScriptTransformer`.
-
-### Migrations
-
-- Don't reference enums, models, or app classes in migrations.
-- Hardcode seeded values; use `DB::table(...)`, not Eloquent models.
-
-### Index / listing pages
-
-- Query with `spatie/laravel-query-builder`: `allowedFilters(...)`, `allowedSorts(...)`, `defaultSort(...)`, `->paginate(20)`.
-- Pass spread arguments to `allowedFilters()` / `allowedSorts()`, never an array.
-- Search → `AllowedFilter::partial`. Filters → `AllowedFilter::exact` (comma-separated input = `whereIn`).
-- Sort a related column with `AllowedSort::callback()` + a correlated subquery, not a join.
-- Validate query params with a Data object type-hinted on `index()`: `filter.*`, `sort` via `Rule::in([...])`, `page` as `integer|min:1`. Model nested `filter` as a nested Data object.
-- Return `SomeData::collect($paginator->getCollection())` + a `meta` array + filter options + current `filters`/`sort`.
-- store/update/destroy `return back()`.
-
-### Error handling
-
-- Wrap store/update/destroy bodies in `try/catch (Throwable)`.
-- Log `exception_message`, `exception_file`, `exception_line` (plus `user_id` when authenticated).
-- On catch, redirect back with an `error` flash message.
-
-## Front-end
-
-- Add ShadCN Vue components with `npx shadcn-vue@latest add <component>`.
-- For frontend bugs or precise styling, use the Chrome DevTools MCP to diagnose and verify.
-- Wrap form contents in `<fieldset :disabled="processing">`; put `<Spinner v-if="processing" />` in the submit button.
-- Pass Wayfinder route functions to `:href` directly; don't call `.url()`.
-- Homepage route is named `index`, not `home`.
-- Type props with the generated `App.Data.{Module}.*` ambient types; don't hand-write DTO interfaces.
-
-### Listing pages
-
-- Sync filter/sort/page to the URL: `router.get(url, query, { preserveState: true, preserveScroll: true, replace: true })`; toggle a `loading` ref in `onStart`/`onFinish`.
-- Debounce only the search input (300ms). Filters, sort, clear, and pagination are instant.
-- Disable controls while loading, except the search input. Dim the table body.
-- Order filter controls to match table column order.
-- Build multiselect filters with `DropdownMenuCheckboxItem` + `@select.prevent`.
-- Provide a Clear-filters button (only when a filter/sort is active), sortable headers, and pagination.
-
 ## Testing
 
-- When adding or editing a feature, add or update its tests.
-- For a feature/page behind auth, write three access tests: unauthenticated user can't access, authenticated-but-unauthorized user can't access, authorized user can.
+- When adding or editing a feature, add or update its tests (see `.ai/rules/tests.md`).
+- Run only the tests covering changed code (`--filter=`), once, as the final step. Never run the whole suite.
 
 ## Tooling
 
 - Don't run Pint, Larastan, ESLint, or Prettier unless asked.
-- Run only the tests covering changed code (`--filter=`), once, as the final step. Never run the whole suite.
 
 ## Git
 
@@ -90,26 +38,11 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 ## Foundational Context
 
-This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
+This application is a Laravel application running on PHP 8.5. You are an expert with the Laravel ecosystem. Always use the APIs that match the installed major version of each package — do not assume a version.
 
-- php - 8.5
-- inertiajs/inertia-laravel (INERTIA_LARAVEL) - v3
-- laravel/fortify (FORTIFY) - v1
-- laravel/framework (LARAVEL) - v13
-- laravel/prompts (PROMPTS) - v0
-- laravel/wayfinder (WAYFINDER) - v0
-- larastan/larastan (LARASTAN) - v3
-- laravel/boost (BOOST) - v2
-- laravel/mcp (MCP) - v0
-- laravel/pint (PINT) - v1
-- pestphp/pest (PEST) - v4
-- phpunit/phpunit (PHPUNIT) - v12
-- @inertiajs/vue3 (INERTIA_VUE) - v3
-- @laravel/vite-plugin-wayfinder (WAYFINDER_VITE) - v0
-- tailwindcss (TAILWINDCSS) - v4
-- vue (VUE) - v3
-- eslint (ESLINT) - v9
-- prettier (PRETTIER) - v3
+Before relying on a package's API, confirm its installed version:
+- PHP packages: run `composer show --direct` to list direct dependencies with versions, or `composer show <vendor/package>` for a single package.
+- JS packages: check `package.json` for the installed versions.
 
 ## Skills Activation
 
@@ -167,6 +100,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
 3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
 4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
+
+## Project Rules
+
+- This project contains committed, area-grouped rules in `.ai/rules` when that directory exists (settled decisions, non-obvious traps, standing constraints). Framework and package guidelines that only apply to specific paths (testing, frontend, components) also live there, under `.ai/rules/boost` — this is not just recorded decisions, it is load-bearing guidance you have not seen inline. Before you enter plan mode or create/edit any file, you MUST first: open @.ai/rules/index.md (it maps file globs to rule files), read every rule file whose globs cover the path(s) in scope, and run `grep -rin 'keyword' .ai/rules` to catch what a path match alone misses. Do not write code until you have read and are following every matching rule. If `.ai/rules` does not exist, continue without it.
+- Record durable rules with `record-rule` so the next agent or teammate inherits them instead of working them out again. Pass a `glob` (e.g. `app/Http/Controllers/**`), a short `title`, and a few-line `note`. Always use `record-rule`, never your native memory or notes tool — native memory is personal and session-scoped; only `.ai/rules` is shared with the team and persists in the repo.
 
 ## Artisan
 
@@ -228,23 +166,9 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - If you're creating a generic PHP class, use `php artisan make:class`.
 - Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
 
-### Model Creation
-
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `php artisan make:model --help` to check the available options.
-
-## APIs & Eloquent Resources
-
-- For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
-
 ## URL Generation
 
 - When generating links to other pages, prefer named routes and the `route()` function.
-
-## Testing
-
-- When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
-- Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
 
 ## Vite Error
 
@@ -255,15 +179,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 # Laravel Wayfinder
 
 Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `@/actions/` (controllers) or `@/routes/` (named routes).
-
-=== pest/core rules ===
-
-## Pest
-
-- This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
-- The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
-- Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
-- Do NOT delete tests without approval.
 
 === inertia-vue/core rules ===
 

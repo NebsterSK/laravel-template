@@ -26,13 +26,13 @@
         "ekino/phpstan-banned-code": "^3.2",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "*",
-        "laravel/boost": "^2.0",
+        "laravel/boost": "^2.5",
         "laravel/pint": "^1.25",
         "laravel/tinker": "^3.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "pestphp/pest": "^4.1",
-        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0",
         "veltisan/rapidlogin": "^1.0"
     },
     "autoload": {
@@ -57,6 +57,7 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta",
             "@php artisan ide-helper:models -WR",
+            "vendor/bin/pint --silent",
             "@php artisan boost:update --ansi"
         ],
         "pre-package-uninstall": [

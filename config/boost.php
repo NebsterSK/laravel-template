@@ -19,6 +19,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Boost Project Rules
+    |--------------------------------------------------------------------------
+    |
+    | Project rules let agents write decisions, traps and standing constraints
+    | as tracked Markdown in /.ai/rules/. Enabling "scoped_guidelines" also
+    | moves path-scoped guidelines to .ai/rules/boost/ - it stays opt-in.
+    |
+    */
+
+    'rules' => [
+        'enabled' => env('BOOST_RULES_ENABLED', true),
+        'scoped_guidelines' => env('BOOST_RULES_SCOPED_GUIDELINES', true),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Boost Browser Logs Watcher
     |--------------------------------------------------------------------------
     |
