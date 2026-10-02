@@ -5,9 +5,11 @@ paths:
 
 # Controllers
 
-## Validate every request with a Data object
+## Validate input with a FormRequest, then work with its DTO
 
-Type-hint a `spatie/laravel-data` Data object on every action that takes input, including `index()` query params (e.g. `store(PostData $data)`). laravel-data validates before the method body runs and a failed validation redirects back with errors that Inertia picks up. Never create FormRequests.
+Type-hint a FormRequest on every action that takes input, including `index()` query params (e.g. `store(StorePostRequest $request)`). It validates and authorizes before the method body runs; a failed validation redirects back with errors that Inertia picks up.
+Call `$request->toData()` once at the top and use only the returned Data object from there on. Never read `$request->validated()`, `$request->input()` or request properties in the controller.
+Never type-hint a Data object as action input (laravel-data would validate it a second time), and never type-hint `Illuminate\Http\Request` — actions without input take no request; use `#[CurrentUser]` for the authenticated user.
 
 ## Return Data objects from Inertia::render
 

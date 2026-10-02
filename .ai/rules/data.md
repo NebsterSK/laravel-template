@@ -7,22 +7,16 @@ paths:
 
 ## One Data object per payload
 
-Create one `spatie/laravel-data` `Data` object per payload in `app/Data/{Module}` and annotate it with `#[TypeScript]`.
-Data objects serve **both** roles: validating incoming requests and typing output to the frontend. Do not create FormRequests and do not hand-map arrays.
+Create one `spatie/laravel-data` `Data` object per payload in `app/Data/{Module}`, suffix it with `Data`, and annotate it with `#[TypeScript]`.
+Data objects are plain typed DTOs: they carry validated input from a FormRequest's `toData()` onward and type output to the frontend. Do not hand-map arrays.
 
-## Define rules in a static rules() method
+## No validation in Data objects
 
-Define validation in a static `rules(ValidationContext $context): array` method using Laravel's array syntax (it mirrors a FormRequest's `rules()`).
-Use validation attributes (`#[Required]`, `#[Max(255)]`, …) only for trivial single-rule fields.
-Authorize in a static `authorize(): bool`; put custom messages and attribute names in static `messages()` / `attributes()`.
+Validation and authorization live in the FormRequest. Do not add `rules()`, `authorize()`, `messages()`, `attributes()` or validation attributes (`#[Required]`, `#[Max(255)]`, …) to Data objects.
 
-## Never use from() for a write payload
+## Index query params
 
-`SomeData::from($request)` skips validation. Type-hint the object in the controller action (laravel-data resolves and validates it before the method body runs) or call `SomeData::validateAndCreate($request)`.
-
-## Query-param Data objects for index actions
-
-Validate `index()` query params with their own Data object: `filter.*`, `sort` via `Rule::in([...])`, and `page` as `integer|min:1`. Model a nested `filter` as a nested Data object.
+Validate `index()` query params in an `Index{Model}Request` (`filter.*`, `sort` via `Rule::in([...])`, `page` as `integer|min:1`). Its `toData()` returns the query Data object; model a nested `filter` as a nested Data object.
 
 ## Regenerate TypeScript after every change
 

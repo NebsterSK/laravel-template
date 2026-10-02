@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Settings;
 
 use App\Concerns\ProfileValidationRules;
+use App\Data\Settings\ProfileData;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -18,5 +19,13 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return $this->profileRules($this->user()->id);
+    }
+
+    /**
+     * Get the validated profile data.
+     */
+    public function toData(): ProfileData
+    {
+        return ProfileData::from($this->validated());
     }
 }

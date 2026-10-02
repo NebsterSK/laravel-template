@@ -49,8 +49,10 @@ class SecurityController extends Controller implements HasMiddleware
      */
     public function update(PasswordUpdateRequest $request): RedirectResponse
     {
+        $data = $request->toData();
+
         $request->user()->update([
-            'password' => $request->password,
+            'password' => $data->password,
         ]);
 
         return back();

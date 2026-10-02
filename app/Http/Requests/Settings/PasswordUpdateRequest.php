@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Settings;
 
 use App\Concerns\PasswordValidationRules;
+use App\Data\Settings\PasswordData;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,5 +22,13 @@ class PasswordUpdateRequest extends FormRequest
             'current_password' => $this->currentPasswordRules(),
             'password' => $this->passwordRules(),
         ];
+    }
+
+    /**
+     * Get the validated password data.
+     */
+    public function toData(): PasswordData
+    {
+        return PasswordData::from($this->validated());
     }
 }
