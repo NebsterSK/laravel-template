@@ -16,7 +16,7 @@ test('users can view their profile settings', function () {
         ->get(route('profile.edit'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('settings/Profile')
+            ->component('settings/profile')
             ->where('mustVerifyEmail', false)
         );
 });
@@ -30,6 +30,7 @@ test('users can update their profile', function () {
             'email' => 'jane@example.com',
         ])
         ->assertSessionHasNoErrors()
+        ->assertInertiaFlash('toast', ['type' => 'success', 'message' => 'Profile updated.'])
         ->assertRedirect(route('profile.edit'));
 
     $user->refresh();

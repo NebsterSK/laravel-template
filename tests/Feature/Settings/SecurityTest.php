@@ -17,8 +17,34 @@ test('users can view their security settings', function () {
         ->get(route('security.edit'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('settings/Security')
+            ->component('settings/security')
+            ->where('canManageTwoFactor', true)
             ->where('twoFactorEnabled', false)
+        );
+});
+
+test('the security settings require password confirmation', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get(route('security.edit'))
+        ->assertRedirect(route('password.confirm'));
+});
+
+test('the security settings render without two factor when disabled', function () {
+    config(['fortify.features' => []]);
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->withSession(['auth.password_confirmed_at' => time()])
+        ->get(route('security.edit'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('settings/security')
+            ->where('canManageTwoFactor', false)
+            ->missing('twoFactorEnabled')
+            ->missing('requiresConfirmation')
         );
 });
 
@@ -33,6 +59,7 @@ test('users can update their password', function () {
             'password_confirmation' => 'New-Passw0rd!2026',
         ])
         ->assertSessionHasNoErrors()
+        ->assertInertiaFlash('toast', ['type' => 'success', 'message' => 'Password updated.'])
         ->assertRedirect(route('security.edit'));
 
     expect(Hash::check('New-Passw0rd!2026', $user->refresh()->password))->toBeTrue();

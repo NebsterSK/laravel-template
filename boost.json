@@ -14,7 +14,7 @@
         "laravel-best-practices",
         "testing-best-practices",
         "wayfinder-development",
-        "inertia-vue-development",
+        "inertia-react-development",
         "tailwindcss-development"
     ]
 }

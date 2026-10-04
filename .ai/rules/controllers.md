@@ -30,4 +30,4 @@ Return `SomeData::collect($paginator->getCollection())` plus a `meta` array, the
 
 Wrap `store`/`update`/`destroy` bodies in `try/catch (Throwable)`.
 Log `exception_message`, `exception_file`, `exception_line`, plus `user_id` when authenticated.
-On catch, redirect back with an `error` flash message.
+On catch, flash an error toast (`Inertia::flash('toast', ['type' => 'error', 'message' => …])`) and redirect back. Flash a `success` toast after a successful write.

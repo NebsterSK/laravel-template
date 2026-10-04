@@ -12,6 +12,5 @@
 /resources/js/routes
 /resources/js/wayfinder
 /vendor
-.phpstorm.meta.php
-_ide_helper.php
-/.claude/settings.local.json
+/.claude/settings.local.json/.phpunit.cache
+/public/fonts-manifest.dev.json

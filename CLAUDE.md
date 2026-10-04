@@ -16,7 +16,7 @@ See `README.md` for project overview, stack, setup, and architecture.
 
 ## Tooling
 
-- Don't run Pint, Larastan, ESLint, or Prettier unless asked.
+- Don't run Pint, Larastan, or `vp check` (lint/format) unless asked.
 
 ## Git
 
@@ -123,6 +123,16 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
+=== tests rules ===
+
+# Test Enforcement
+
+- Add or update tests for behavior and logic changes when a test provides meaningful regression coverage.
+- Pure copy, styling, and layout-only changes do not require new or updated tests.
+- When test coverage applies, run the affected tests and ensure they pass.
+- Test the changed behavior and its important failure modes, but do not add tests beyond them.
+- Read the `testing-best-practices` skill before writing tests.
+
 === inertia-laravel/core rules ===
 
 # Inertia
@@ -130,7 +140,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Inertia creates fully client-side rendered SPAs without modern SPA complexity, leveraging existing server-side patterns.
 - Components live in `resources/js/pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
 - ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
-- IMPORTANT: Activate `inertia-vue-development` when working with Inertia Vue client-side patterns.
+- IMPORTANT: Activate `inertia-react-development` when working with Inertia client-side patterns.
 
 # Inertia v3
 
@@ -164,11 +174,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 Use Wayfinder to generate TypeScript functions for Laravel routes. Import from `@/actions/` (controllers) or `@/routes/` (named routes).
 
-=== inertia-vue/core rules ===
+=== inertia-react/core rules ===
 
-# Inertia + Vue
+# Inertia + React
 
-Vue components must have a single root element.
-- IMPORTANT: Activate `inertia-vue-development` when working with Inertia Vue client-side patterns.
+- IMPORTANT: Activate `inertia-react-development` when working with Inertia React client-side patterns.
 
 </laravel-boost-guidelines>

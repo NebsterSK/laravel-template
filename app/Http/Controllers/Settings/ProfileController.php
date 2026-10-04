@@ -20,7 +20,7 @@ class ProfileController extends Controller
      */
     public function edit(#[CurrentUser] User $user): Response
     {
-        return Inertia::render('settings/Profile', [
+        return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);
@@ -41,6 +41,8 @@ class ProfileController extends Controller
         }
 
         $user->save();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile updated.')]);
 
         return to_route('profile.edit');
     }

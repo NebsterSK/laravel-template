@@ -17,13 +17,13 @@
         "laravel/head": "^0.2.2",
         "laravel/wayfinder": "^0.1.14",
         "spatie/laravel-data": "^4.23",
+        "spatie/laravel-permission": "^8.3",
         "spatie/laravel-query-builder": "^7.3",
         "spatie/laravel-typescript-transformer": "^3.2"
     },
     "require-dev": {
         "andreapollastri/checkpoint": "^1.1",
         "barryvdh/laravel-debugbar": "^4.0",
-        "barryvdh/laravel-ide-helper": "^3.6",
         "ekino/phpstan-banned-code": "^3.2",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "*",
@@ -55,17 +55,11 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta",
-            "@php artisan ide-helper:models -WR",
             "vendor/bin/pint --silent",
             "@php artisan boost:update --ansi"
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ],
-        "models": [
-            "@php artisan ide-helper:models -WR"
         ],
         "larastan": [
             "vendor/bin/phpstan analyse"

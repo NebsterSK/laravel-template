@@ -11,5 +11,6 @@ test('the seeder creates the admin user', function () {
     expect($admin)->not->toBeNull()
         ->and($admin->name)->toBe('Admin')
         ->and($admin->email_verified_at)->not->toBeNull()
-        ->and(Hash::check('password', $admin->password))->toBeTrue();
+        ->and(Hash::check('password', $admin->password))->toBeTrue()
+        ->and($admin->hasRole('admin'))->toBeTrue();
 });
