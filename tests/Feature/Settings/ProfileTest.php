@@ -9,6 +9,14 @@ test('guests cannot access the profile settings', function () {
     $this->delete(route('profile.destroy'))->assertRedirect(route('login'));
 });
 
+test('the settings root redirects to the profile settings', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get('/settings')
+        ->assertRedirect(route('profile.edit'));
+});
+
 test('users can view their profile settings', function () {
     $user = User::factory()->create();
 

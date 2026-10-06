@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Settings\ProfileDeleteRequest;
 use App\Http\Requests\Settings\TwoFactorAuthenticationRequest;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -38,7 +39,8 @@ arch('seeders do not use models')
     ->expect('Database\Seeders')
     ->not->toUse('App\Models');
 
-arch('models have factories')
+arch('models have factories and declare their fillable attributes')
     ->expect('App\Models')
     ->classes()
-    ->toUseTrait(HasFactory::class);
+    ->toUseTrait(HasFactory::class)
+    ->toHaveAttribute(Fillable::class);

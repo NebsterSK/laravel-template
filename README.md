@@ -69,9 +69,13 @@ Index pages use `spatie/laravel-query-builder` for search, filtering, and sortin
 
 Migrations and seeders never reference app classes. Reference data is seeded with `DB::table(...)` and hardcoded values, so each migration stays an immutable, dependency-free snapshot.
 
+### Strict Eloquent
+
+Models are not unguarded. Outside production, `Model::shouldBeStrict()` makes lazy loading, reading unselected attributes, and mass assigning non-fillable attributes throw; in production, lazy loading is logged as a warning instead.
+
 ### Architecture tests
 
-`tests/Unit/ArchTest.php` enforces the conventions above: FormRequests extend `FormRequest`, are suffixed `Request` and expose `toData()`; controllers never use the raw request; DTOs extend `Data` with `#[TypeScript]`; seeders don't use models; models use `HasFactory`.
+`tests/Unit/ArchTest.php` enforces the conventions above: FormRequests extend `FormRequest`, are suffixed `Request` and expose `toData()`; controllers never use the raw request; DTOs extend `Data` with `#[TypeScript]`; seeders don't use models; models use `HasFactory` and declare `#[Fillable]`.
 
 ## Conventions
 
