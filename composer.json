@@ -24,6 +24,7 @@
     "require-dev": {
         "andreapollastri/checkpoint": "^1.1",
         "barryvdh/laravel-debugbar": "^4.0",
+        "barryvdh/laravel-ide-helper": "^3.7",
         "ekino/phpstan-banned-code": "^3.2",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "*",
@@ -55,11 +56,15 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:models -WR --no-interaction --silent",
             "vendor/bin/pint --silent",
             "@php artisan boost:update --ansi"
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "models": [
+            "@php artisan ide-helper:models -WR --no-interaction"
         ],
         "larastan": [
             "vendor/bin/phpstan analyse"
