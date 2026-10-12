@@ -65,9 +65,9 @@ Forms use Inertia's `<Form>` with Wayfinder `.form()` helpers. While submitting,
 
 Index pages use `spatie/laravel-query-builder` for search, filtering, and sorting with `paginate(20)`. An `Index{Model}Request` validates the query params; the controller returns DTO rows, a pagination `meta` block, the filter options, and the active `filters`/`sort`. The React page mirrors that state to the URL (`router.get` with `preserveState`/`replace`), debounces only the search box (300ms), and applies filters/sort/pagination instantly.
 
-### Migrations and seeders
+### Migrations
 
-Migrations and seeders never reference app classes. Reference data is seeded with `DB::table(...)` and hardcoded values, so each migration stays an immutable, dependency-free snapshot.
+Migrations never reference app classes (models, enums, …). Data inserted by a migration uses `DB::table(...)` and hardcoded values, so each migration stays an immutable, dependency-free snapshot. Seeders may use models and factories.
 
 ### Strict Eloquent
 
@@ -75,7 +75,7 @@ Models are not unguarded. Outside production, `Model::shouldBeStrict()` makes la
 
 ### Architecture tests
 
-`tests/Unit/ArchTest.php` enforces the conventions above: FormRequests extend `FormRequest`, are suffixed `Request` and expose `toData()`; controllers never use the raw request; DTOs extend `Data` with `#[TypeScript]`; seeders don't use models; models use `HasFactory` and declare `#[Fillable]`.
+`tests/Unit/ArchTest.php` enforces the conventions above: FormRequests extend `FormRequest`, are suffixed `Request` and expose `toData()`; controllers never use the raw request; DTOs extend `Data` with `#[TypeScript]`; models use `HasFactory` and declare `#[Fillable]`.
 
 ## Conventions
 

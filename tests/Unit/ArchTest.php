@@ -35,10 +35,6 @@ arch('data objects extend Data and are exported to TypeScript')
     ->toHaveAttribute(TypeScript::class)
     ->toHaveSuffix('Data');
 
-arch('seeders do not use models')
-    ->expect('Database\Seeders')
-    ->not->toUse('App\Models');
-
 arch('models have factories and declare their fillable attributes')
     ->expect('App\Models')
     ->classes()

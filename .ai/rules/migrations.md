@@ -1,7 +1,6 @@
 ---
 paths:
   - 'database/migrations/**'
-  - 'database/seeders/**'
 ---
 
 # Migrations
@@ -10,6 +9,6 @@ paths:
 
 Do not reference enums, models, or other app classes in migrations — they change or disappear while old migrations must still run.
 
-## Seed with the query builder
+## Insert data with the query builder
 
-Hardcode seeded values and write them with `DB::table(...)`, not Eloquent models.
+When a migration inserts data, hardcode the values and write them with `DB::table(...)`, not Eloquent models.
