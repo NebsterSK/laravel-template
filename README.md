@@ -1,35 +1,46 @@
 # Laravel template
 
-A starter template for personal Laravel apps — Laravel, Inertia, and React with typed routes and a ShadCN-based UI. It is based on the official Laravel React starter kit. Clone it as the baseline for a new project, then build features on top of the conventions below.
+A starter template for personal Laravel apps — Laravel, Inertia, and React with typed routes and a ShadCN-based UI, based on the official Laravel React starter kit. Clone it as the baseline for a new project, then build features on top of the conventions below.
+
+> When starting a project: replace the title and the paragraph above with a 2–3 sentence recap of `PRODUCT.md` (what it is, who it's for, what it does).
+
+## Documentation
+
+- `PRODUCT.md` — product specification: users, features, domain, business rules, roadmap.
+- `DESIGN.md` — frontend design system: tokens, typography, spacing, component usage.
+- `CLAUDE.md` + `.ai/rules/` — coding rules and conventions for contributors and AI agents.
 
 ## Stack
 
 - PHP 8.5, Laravel 13, MySQL
-- Inertia.js v3 + React 19 (React Compiler) + TypeScript, Tailwind CSS v4, ShadCN (Radix), sonner (toasts), lucide-react (icons)
+- Inertia.js v3 + React 19 (React Compiler) + TypeScript, Tailwind CSS v4, ShadCN (Radix), sonner (toasts), lucide-react (icons); client-side rendering only (SSR off)
 - Laravel Fortify (auth, email verification routes, 2FA), Laravel Wayfinder (typed routes), Laravel Head (document head)
 - `spatie/laravel-data` (DTOs), `spatie/laravel-typescript-transformer` (TS codegen), `spatie/laravel-query-builder` (filtering/sorting), `spatie/laravel-permission` (roles & permissions)
-- Dev: Laravel Boost (AI guidelines + MCP), Debugbar, Checkpoint, Rapidlogin
+- Dev: Laravel Boost (AI guidelines + MCP), Laravel IDE Helper (model doc blocks), Debugbar, Checkpoint, Rapidlogin
 - Quality: Pest (feature + arch tests), Larastan with banned-code rules, Pint, Vite+ (`vp check`: oxlint + oxfmt)
 
 ## Local development
 
-Served by **Laravel Herd** at `https://template.test` (project lives at `E:\webs\template`); Herd provides `php` and `composer`.
+Served by **lerd** at `https://template.test` (`.lerd.yaml`); lerd provides `php`, `composer`, `node` and `npm`. Requires Node 26+.
 
 ```bash
-# install
+# first run
+lerd link                    # register the site (HTTPS via .lerd.yaml)
+lerd env                     # point .env at lerd's services
 composer install
 npm install
 php artisan migrate --seed   # seeds admin@example.com / password with the "admin" role
 
 composer resetup             # full reinstall + npm install + migrate:fresh --seed
 
-# frontend (Herd serves PHP automatically)
+# frontend (lerd serves PHP)
 npm run dev                  # Vite dev server / HMR
 npm run build                # production build
 
 # codegen — run after backend changes
 php artisan wayfinder:generate --with-form   # regenerate @/routes + @/actions (keep --with-form)
 php artisan typescript:transform             # regenerate App.Data.* types
+composer models                              # regenerate model doc blocks (also runs on composer update)
 
 # tests (MySQL database `template_test`, see phpunit.xml)
 php artisan test --compact
@@ -76,7 +87,3 @@ Models are not unguarded. Outside production, `Model::shouldBeStrict()` makes la
 ### Architecture tests
 
 `tests/Unit/ArchTest.php` enforces the conventions above: FormRequests extend `FormRequest`, are suffixed `Request` and expose `toData()`; controllers never use the raw request; DTOs extend `Data` with `#[TypeScript]`; models use `HasFactory` and declare `#[Fillable]`.
-
-## Conventions
-
-Coding rules for contributors and AI agents live in `CLAUDE.md` (global) and `.ai/rules/` (path-scoped, indexed in `.ai/rules/index.md`).
